@@ -1,0 +1,309 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+:root {
+  --primary-color: #39FF88;
+  --secondary-color: #FF39DF;
+  --tertiary-color: #3FA1FC;
+  --quaternary-color: #7D7D7D;
+  --background-color: #101a25;
+  --item-background: #1a1a20;
+  --text-color: #93979c;
+  --text-color-light: #cbcbdd;
+  --text-color-highlight: #fff;
+}
+
+body {
+  margin: 0;
+  background: var(--background-color);
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+}
+
+.layoutWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 100vw;
+  gap: 30px;
+  min-height: 100vh;
+  justify-content: center;
+  position: relative;
+}
+
+.layoutWrapper::before {
+  content: "";
+  background: url(back.jpg);
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: grayscale(1);
+}
+
+.mainWrapper {
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+  width: 100%;
+  position: relative;
+}
+
+.arrowTop {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(
+    rgba(240, 121, 121, 0),
+    rgb(207, 203, 203),
+    rgba(240, 121, 121, 0)
+  );
+}
+
+.containerGrid {
+  display: flex;
+  height: 250px; /* Increased height */
+}
+
+.boxWrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.boxGrid {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.boxContainer {
+  position: relative;
+  width: 100%;
+  height: 250px; /* Increased height */
+  min-height: 250px; /* Increased height */
+  min-width: auto;
+  background: #11141f;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.itemGrid {
+  display: flex;
+  gap: 0px;
+  align-items: center;
+  width: max-content;
+  position: relative;
+}
+
+.itemBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: all 0.5s;
+  position: relative;
+}
+
+.itemBox.highlight {
+  z-index: 9;
+}
+
+.itemBox.highlight .itemInfo {
+  visibility: visible;
+  bottom: 5px;
+}
+
+.itemBoxContent {
+  display: flex;
+}
+
+.item {
+  display: flex;
+  width: 200px; /* Increased width */
+  height: 230px; /* Increased height */
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: var(--item-background);
+  border-radius: 6px;
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 14px;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.item .rarityShadow {
+  width: 100px; /* Increased size */
+  height: 100px; /* Increased size */
+  border-radius: 100%;
+  filter: blur(64px);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 18px;
+}
+
+.item .rarityBorder {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 12px;
+}
+
+.itemCover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemCover img {
+  position: relative;
+  z-index: 9;
+  width: 160px; /* Increased size */
+  height: 160px; /* Increased size */
+}
+
+.itemInfo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  color: var(--text-color-highlight);
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  visibility: hidden;
+  transition: all 0.5s;
+  position: absolute;
+  bottom: -15px;
+}
+
+.itemInfo span {
+  color: var(--text-color-light);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.24px;
+}
+
+.rollButton {
+  background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  border: none;
+  color: var(--text-color-highlight);
+  padding: 12px 50px;
+  font-size: 16px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+  position: relative;
+}
+
+.itemWinAnimation {
+  display: none;
+}
+
+.highlight .itemWinAnimation {
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  position: absolute;
+  opacity: 0.2;
+  animation: itemBlink 0.3s linear forwards;
+  display: block;
+}
+
+@keyframes itemBlink {
+  0%,
+  33% {
+    left: 0%;
+    transform: translate(-100%);
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+.bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.highlight .bubbles {
+  display: block;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  background: var(--text-color-highlight);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rise 10s infinite ease-in;
+}
+
+/* Add bubble animations here (same as before) */
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 8px;
+  }
+
+  .containerGrid {
+    height: 200px; /* Slightly reduced height for mobile */
+  }
+
+  .boxContainer {
+    height: 200px; /* Slightly reduced height for mobile */
+    min-height: 200px; /* Slightly reduced height for mobile */
+  }
+
+  .item {
+    width: 150px; /* Reduced width for mobile */
+    height: 180px; /* Reduced height for mobile */
+  }
+
+  .itemCover img {
+    width: 120px; /* Reduced size for mobile */
+    height: 120px; /* Reduced size for mobile */
+  }
+
+  .rollButton {
+    padding: 10px 30px;
+    font-size: 14px;
+  }
+}

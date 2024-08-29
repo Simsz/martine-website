@@ -1,0 +1,205 @@
+---
+import Nav from "../components/Nav.astro";
+import "../assets/BoxGrid.css";
+import rollSound from "../assets/reel-2.mp3";
+import winSound from "../assets/win_new.mp3";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drink Roulette</title>
+  </head>
+  <body>
+    <Nav />
+    <div class="layout-wrapper">
+      <div id="winner-popup" class="winner-popup hidden">
+        <div class="winner-content">
+          <img id="winner-image" src="" alt="Winning drink" />
+          <h2 id="winner-name"></h2>
+          <p id="winner-price"></p>
+          <p id="winner-description"></p>
+        </div>
+      </div>
+      <div class="main-wrapper">
+        <div class="container">
+          <div class="arrow-top"></div>
+              <div class="box-container">
+                <div id="item-grid" class="item-grid">
+                  <!-- Items will be dynamically inserted here -->
+                </div>
+              </div>
+        </div>
+      </div>
+      <button id="roll-button" class="bubbly-button">Roll</button>
+    </div>
+    <audio id="roll-sound" src={rollSound}></audio>
+    <audio id="win-sound" src={winSound}></audio>
+
+    <script>
+      import { shuffleArray } from "../utils/helpers";
+      document.addEventListener("DOMContentLoaded", function () {
+        const images = [
+          { name: "Martini", price: "12", url: "https://martine.tiny.pm/public/1.png", description: "Classic cocktail with gin and vermouth", rarity: "common" },
+          { name: "Mojito", price: "10", url: "https://martine.tiny.pm/public/2.png", description: "Refreshing Cuban highball with mint and lime", rarity: "common" },
+          { name: "Margarita", price: "11", url: "https://martine.tiny.pm/public/3.png", description: "Tequila-based cocktail with lime and salt", rarity: "uncommon" },
+          { name: "Old Fashioned", price: "13", url: "https://martine.tiny.pm/public/4.png", description: "Whiskey cocktail with bitters and sugar", rarity: "uncommon" },
+          { name: "Daiquiri", price: "9", url: "https://martine.tiny.pm/public/5.png", description: "Rum-based cocktail with lime juice", rarity: "rare" },
+          { name: "Negroni", price: "12", url: "https://martine.tiny.pm/public/6.png", description: "Italian cocktail with gin, vermouth, and Campari", rarity: "rare" },
+          { name: "Whiskey Sour", price: "10", url: "https://martine.tiny.pm/public/7.png", description: "Whiskey cocktail with lemon juice and sugar", rarity: "epic" },
+          { name: "Gin & Tonic", price: "9", url: "https://martine.tiny.pm/public/8.png", description: "Simple highball with gin and tonic water", rarity: "epic" },
+          { name: "Cosmopolitan", price: "11", url: "https://martine.tiny.pm/public/9.png", description: "Vodka cocktail with cranberry and lime", rarity: "legendary" },
+          { name: "Moscow Mule", price: "10", url: "https://martine.tiny.pm/public/10.png", description: "Vodka-based cocktail with ginger beer", rarity: "legendary" },
+        ];
+
+        const rarityColors = {
+          common: { background: "#39FF88", border: "#39FF88" },
+          uncommon: { background: "#3FA1FC", border: "#3FA1FC" },
+          rare: { background: "#FF39DF", border: "#FF39DF" },
+          epic: { background: "#FFD700", border: "#FFD700" },
+          legendary: { background: "#FF4500", border: "#FF4500" },
+        };
+
+        const itemGrid = document.getElementById("item-grid");
+        const rollButton = document.getElementById("roll-button");
+        const rollSound = document.getElementById("roll-sound") as HTMLAudioElement;
+        const winSound = document.getElementById("win-sound") as HTMLAudioElement;
+        const winnerPopup = document.getElementById("winner-popup");
+        const winnerImage = document.getElementById("winner-image");
+        const winnerName = document.getElementById("winner-name");
+        const winnerPrice = document.getElementById("winner-price");
+        const winnerDescription = document.getElementById("winner-description");
+
+        let isRolling = false;
+        let shuffledImages = shuffleArray([...images]);
+
+        function createItems() {
+          const totalItems = 150;
+          for (let i = 0; i < totalItems; i++) {
+            const image = shuffledImages[i % shuffledImages.length];
+            const rarityColor = rarityColors[image.rarity];
+            const itemBox = document.createElement("div");
+            itemBox.className = "item-box";
+            itemBox.innerHTML = `
+            <div class="item" style="border-color: ${rarityColor.border};">
+                <div class="item-win-animation" style="background: linear-gradient(to right, rgba(0, 0, 0, 0), ${rarityColor.background}, rgba(0, 0, 0, 0));"></div>
+                <div class="item-cover">
+                    <img src="${image.url}" alt="${image.name}" />
+                </div>
+                <div class="item-info">
+                    <span class="item-name">${image.name}</span>
+                    <span class="item-price">$${image.price}</span>
+                </div>
+                <div class="rarity-indicator" style="background-color: ${rarityColor.background};"></div>
+            </div>
+        `;
+            itemGrid.appendChild(itemBox);
+          }
+        }
+
+        function showWinnerPopup(winningItem) {
+          winnerImage.setAttribute("src", winningItem.url);
+          winnerName.textContent = winningItem.name;
+          winnerPrice.textContent = `$${winningItem.price}`;
+          winnerDescription.textContent = winningItem.description;
+          winnerPopup.classList.remove("hidden");
+        }
+
+        function rollRandomLeft() {
+          if (isRolling) return;
+          isRolling = true;
+          rollButton.setAttribute("disabled", "true");
+          winnerPopup.classList.add("hidden");
+
+          shuffledImages = shuffleArray([...images]);
+
+          itemGrid.innerHTML = "";
+          createItems();
+
+          rollSound.play();
+
+          itemGrid.style.transition = "none";
+          itemGrid.style.transform = "translateX(0%)";
+
+          setTimeout(() => {
+            const randomInRange = -50 + Math.random() * 0.5;
+            console.log("random in range" + randomInRange);
+            itemGrid.style.transition = "all 4.5s cubic-bezier(0.05, 0.10, 0.15, 1.0)";
+            itemGrid.style.transform = `translateX(${randomInRange}%)`;
+
+            setTimeout(() => {
+              const winningItemIndex = Math.floor(itemGrid.children.length / 2) - 1;
+              const winningItemElement = itemGrid.children[winningItemIndex];
+              winningItemElement.classList.add("highlight");
+              winSound.play();
+
+              // Change this line to move the winning item slightly to the right
+              itemGrid.style.transition = "all 0.1s cubic-bezier(0.05, 0.10, 0.15, 1.0)";
+              itemGrid.style.transform = "translateX(-50%) translateX(+84px)";
+
+              const winningItem = shuffledImages[winningItemIndex % shuffledImages.length];
+              showWinnerPopup(winningItem);
+
+              isRolling = false;
+              rollButton.removeAttribute("disabled");
+              rollButton.classList.remove("animate");
+            }, 4500);
+          }, 10);
+        }
+
+        createItems();
+        rollButton.addEventListener("click", rollRandomLeft);
+      });
+    </script>
+
+    <script>
+      function animateButton(e) {
+        e.preventDefault();
+        e.target.classList.remove("animate");
+        e.target.classList.add("animate");
+        setTimeout(function () {
+          e.target.classList.remove("animate");
+        }, 700);
+      }
+
+      document.getElementById("roll-button").addEventListener("click", animateButton, false);
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", initializeMenu);
+    document.addEventListener("astro:after-swap", initializeMenu);
+  
+    function initializeMenu() {
+      const hamburgerIcon = document.querySelector<HTMLElement>("#hamburger-icon");
+      const mobileMenu = document.querySelector<HTMLElement>(".mobile-menu");
+      const mobileNavLinks = document.querySelectorAll<HTMLElement>(".mobile-nav-link");
+  
+      hamburgerIcon?.addEventListener("click", () => {
+        hamburgerIcon.classList.toggle("active");
+        mobileMenu?.classList.toggle("active");
+  
+        if (mobileMenu?.classList.contains("active")) {
+          mobileMenu.style.display = "flex";
+          setTimeout(() => {
+            mobileNavLinks.forEach((link, index) => {
+              setTimeout(() => {
+                link.style.opacity = "1";
+                link.style.transform = "translateY(0)";
+              }, index * 100);
+            });
+          }, 100);
+        } else {
+          mobileNavLinks.forEach((link) => {
+            link.style.opacity = "0";
+            link.style.transform = "translateY(20px)";
+          });
+          setTimeout(() => {
+            if (mobileMenu) mobileMenu.style.display = "none";
+          }, 300);
+        }
+      });
+    }
+  </script>
+  </body>
+</html>

@@ -1,0 +1,339 @@
+---
+import { Image } from "astro:assets";
+import logoImage from "../assets/logo.png";
+import backgroundImage from "../assets/background.jpg";
+import overlayVideo from "../assets/fg4.mp4";
+import Nav from "./Nav.astro";
+---
+
+<div id="overlay">
+  <video autoplay muted loop id="background-video">
+    <source src={overlayVideo} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
+<section class="hero" transition:persist>
+  <Nav />
+
+  <div class="mobile-content">
+    <a href="/menu" class="circle-button" transition:animate="fade">
+      <div class="logo">
+        <Image src={logoImage} alt="MARTINE Logo" />
+      </div>
+      <div class="circular-text">
+        <svg id="rotatingText" viewBox="0 0 200 200" width="220" height="220">
+          <defs>
+            <path id="circle" d="M 100, 100 m -85, 0 a 85, 85 0 1, 0 170, 0 a 85, 85 0 1, 0 -170, 0"></path>
+          </defs>
+          <text width="400">
+            <textPath xlink:href="#circle" class="text"> click for drinks • click for drinks • click for drinks • </textPath>
+          </text>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+  <div class="circular-grid"></div>
+
+  <div class="letters-container">
+    <div class="letter" data-letter="M">M</div>
+    <div class="letter" data-letter="A">A</div>
+    <div class="letter" data-letter="R">R</div>
+    <div class="letter" data-letter="T">T</div>
+    <div class="letter" data-letter="I">I</div>
+    <div class="letter" data-letter="N">N</div>
+    <div class="letter" data-letter="E">E</div>
+  </div>
+</section>
+
+<style define:vars={{ backgroundImage: `url(${backgroundImage.src})` }}>
+  #overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+    z-index: -1;
+  }
+
+  .hero {
+    position: relative;
+    height: 100vh;
+    color: #dedede;
+    background: var(--backgroundImage) no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    padding-top: 100px; /* Add padding to account for the fixed navigation */
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+
+  .logo {
+    position: fixed;
+    top: 7%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: auto;
+    z-index: 2;
+  }
+
+  .circular-grid {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vw;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .circular-grid::before,
+  .circular-grid::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  .circular-grid::before {
+    width: 60vw;
+    height: 60vw;
+  }
+
+  .circular-grid::after {
+    width: 40vw;
+    height: 40vw;
+  }
+
+  .letters-container {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 25vw 0vw 1vw;
+    overflow: hidden;
+  }
+
+  .letter {
+    font-size: 15vw;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    will-change: transform;
+    cursor: default;
+  }
+
+  .letter:hover {
+    transform: scale(1.1);
+    color: #849f69;
+  }
+
+  .mobile-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .circle-button {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    text-decoration: none;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    animation: pulse 2s infinite;
+  }
+
+  .circle-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  .circle-button:active {
+    transform: scale(0.95);
+  }
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+
+  .circle-button .logo {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
+  }
+
+  .circle-button:hover .logo {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .circle-button .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .circular-text {
+    position: absolute;
+    width: 110%; /* Increased from 100% */
+    height: 110%; /* Increased from 100% */
+  }
+
+  #rotatingText {
+    animation: rotate-circle 10s linear infinite;
+  }
+
+  .text {
+    font-weight: 600;
+    letter-spacing: 1.7px;
+    text-transform: uppercase;
+    font-family: "Kanit", sans-serif;
+    font-size: 16px; /* Increased from 14px */
+    fill: #dedede;
+  }
+
+  @keyframes rotate-circle {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @media (max-width: 981px) {
+    .hero {
+      padding-top: 0;
+    }
+
+    .mobile-content {
+      display: flex;
+      padding-top: 60px;
+    }
+
+    .circle-button {
+      transform: translateY(-35px); /* Moves the button up by 10px */
+    }
+
+    .circle-button:hover {
+      transform: translateY(-35px) scale(1.05);
+    }
+
+    .circle-button:active {
+      transform: translateY(-35px) scale(0.95);
+    }
+
+    .circular-grid {
+      width: 150vw;
+      height: 150vw;
+    }
+
+    .circular-grid::before {
+      width: 120vw;
+      height: 120vw;
+    }
+
+    .circular-grid::after {
+      width: 90vw;
+      height: 90vw;
+    }
+
+    .letters-container {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      justify-content: flex-start;
+      padding: 0 20px;
+    }
+
+    .letter {
+      font-size: 15vw;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", initializeMenu);
+  document.addEventListener("astro:after-swap", initializeMenu);
+
+  function initializeMenu() {
+    const hamburgerIcon = document.querySelector<HTMLElement>("#hamburger-icon");
+    const mobileMenu = document.querySelector<HTMLElement>(".mobile-menu");
+    const mobileNavLinks = document.querySelectorAll<HTMLElement>(".mobile-nav-link");
+
+    hamburgerIcon?.addEventListener("click", () => {
+      hamburgerIcon.classList.toggle("active");
+      mobileMenu?.classList.toggle("active");
+
+      if (mobileMenu?.classList.contains("active")) {
+        mobileMenu.style.display = "flex";
+        setTimeout(() => {
+          mobileNavLinks.forEach((link, index) => {
+            setTimeout(() => {
+              link.style.opacity = "1";
+              link.style.transform = "translateY(0)";
+            }, index * 100);
+          });
+        }, 100);
+      } else {
+        mobileNavLinks.forEach((link) => {
+          link.style.opacity = "0";
+          link.style.transform = "translateY(20px)";
+        });
+        setTimeout(() => {
+          if (mobileMenu) mobileMenu.style.display = "none";
+        }, 300);
+      }
+    });
+  }
+</script>

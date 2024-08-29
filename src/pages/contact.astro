@@ -1,0 +1,242 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import { Image } from "astro:assets";
+import backgroundImage from "../assets/inside.jpg";
+import Nav from "../components/Nav.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Contact - MARTINE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
+    <ViewTransitions />
+  </head>
+  <body class="bg-secondary text-primary">
+    <Nav />
+    <div class="relative min-h-screen flex flex-col items-center justify-start md:py-12 md:px-4 font-sans">
+      <div class="absolute inset-0 z-0 hidden md:block overflow-hidden">
+        <Image 
+          src={backgroundImage} 
+          alt="Blurred background" 
+          class="w-full h-full object-cover blur-md brightness-50"
+        />
+      </div>
+
+      <div class="relative z-10 w-full md:max-w-4xl lg:max-w-5xl mt-24"> <!-- Added margin-top -->
+        <div class="bg-secondary-light/80 md:backdrop-blur-md md:rounded-xl md:shadow-2xl overflow-hidden">
+          <div class="px-6 py-12 sm:px-12">
+            <div class="mb-8">
+              <h2 class="text-4xl font-extrabold text-accent mb-4">we host events</h2>
+              <p class="text-lg text-primary-light">Private events at Martine can happen downstairs, upstairs, or throughout our whole space. Martine can accommodate up to 75 guests for private events. A minimum expenditure is required for food, drinks and space.</p>
+            </div>
+            <form action="#" method="POST" class="space-y-6">
+              <div class="grid grid-cols-1 gap-y-4 sm:grid-cols-2 sm:gap-x-6">
+                <div class="form__group">
+                  <input type="text" class="form__field" placeholder="First Name" name="first-name" id='first-name' required />
+                  <label for="first-name" class="form__label">First Name</label>
+                </div>
+                <div class="form__group">
+                  <input type="text" class="form__field" placeholder="Last Name" name="last-name" id='last-name' required />
+                  <label for="last-name" class="form__label">Last Name</label>
+                </div>
+                <div class="form__group sm:col-span-2">
+                  <input type="email" class="form__field" placeholder="Email Address" name="email" id='email' required />
+                  <label for="email" class="form__label">Email Address *</label>
+                </div>
+                <div class="form__group sm:col-span-2">
+                  <input type="tel" class="form__field" placeholder="Phone Number" name="phone" id='phone' />
+                  <label for="phone" class="form__label">Phone Number</label>
+                </div>
+                <div class="form__group sm:col-span-2">
+                  <input type="text" class="form__field" placeholder="Type of Event" name="event-type" id='event-type' required />
+                  <label for="event-type" class="form__label">Type of Event *</label>
+                </div>
+                <div class="form__group">
+                  <input type="number" class="form__field" placeholder="Estimated Guests" name="guests" id='guests' required />
+                  <label for="guests" class="form__label">Estimated Guests *</label>
+                </div>
+                <div class="form__group">
+                  <input type="date" class="form__field" placeholder="Event Date" name="event-date" id='event-date' />
+                  <label for="event-date" class="form__label">Event Date</label>
+                </div>
+                <div class="form__group sm:col-span-2">
+                  <select name="event-time" id="event-time" class="form__field custom-select" required>
+                    <option value="" disabled selected></option>
+                    <option value="early">Early (2pm-6pm)</option>
+                    <option value="late">Late (6pm-10pm)</option>
+                    <option value="all-night">All Night</option>
+                  </select>
+                  <label for="event-time" class="form__label">Event Time</label>
+                </div>
+                <div class="form__group sm:col-span-2">
+                  <textarea id="message" name="message" rows="4" class="form__field" placeholder="Tell us more"></textarea>
+                  <label for="message" class="form__label">Tell us more</label>
+                </div>
+              </div>
+              <div class="flex items-center justify-end mt-6">
+                <button type="submit" class="w-full md:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-secondary bg-accent hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-colors duration-300">
+                  Send Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  :root {
+    --color-accent: #849F69;
+    --color-accent-light: #9EB889;
+    --color-primary: #dedede;
+    --color-secondary: #0B090E;
+    --color-secondary-light: #1A1721;
+    --color-gray: #9b9b9b;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', sans-serif;
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-secondary);
+  }
+
+  .bg-secondary-light\/80 {
+    background-color: rgba(26, 23, 33, 0.8);
+  }
+
+  .text-primary {
+    color: var(--color-primary);
+  }
+
+  .text-primary-light {
+    color: var(--color-gray);
+  }
+
+  .text-accent {
+    color: var(--color-accent);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+
+  .bg-accent-light {
+    background-color: var(--color-accent-light);
+  }
+
+  .form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid var(--color-gray);
+    outline: 0;
+    font-size: 1.3rem;
+    color: var(--color-primary);
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+
+  .form__field::placeholder {
+    color: transparent;
+  }
+
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+  }
+
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: var(--color-gray);
+  }
+
+  .form__field:focus {
+    padding-bottom: 6px;  
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, var(--color-accent), var(--color-accent-light));
+    border-image-slice: 1;
+  }
+
+  .form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: var(--color-accent);
+    font-weight: 700;    
+  }
+
+  .form__field:required, .form__field:invalid { 
+    box-shadow: none; 
+  }
+
+  .custom-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23849F69' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 top 50%;
+    padding-right: 24px;
+  }
+
+  .custom-select:focus {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239EB889' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='18 15 12 9 6 15'%3E%3C/polyline%3E%3C/svg%3E");
+  }
+
+  .custom-select option {
+    background-color: var(--color-secondary-light);
+    color: var(--color-primary);
+  }
+
+  .custom-select option:checked {
+    background-color: var(--color-accent);
+    color: var(--color-secondary);
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  @media (max-width: 768px) {
+    body {
+      overflow: auto;
+      padding-top: 80px;
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--color-secondary-light) inset !important;
+    -webkit-text-fill-color: var(--color-primary) !important;
+  }
+</style>

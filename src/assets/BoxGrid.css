@@ -1,0 +1,404 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;&display=swap");
+
+body {
+  margin: 0;
+  background: #101a25;
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+}
+
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  height: 70vh; /* Increase the height to 70% of the viewport height */
+  min-height: 400px; /* Set a minimum height to ensure it doesn't get too small on smaller screens */
+}
+
+.container {
+  width: 100%;
+  height: 100%; /* Make the container take full height of its parent */
+  position: relative;
+  overflow: hidden;
+  align-content: end;
+  padding: 5%;
+}
+
+.box-container {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  background: #11141f;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.item-grid {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) translateX(+84px);
+  padding: 0 10px;
+}
+
+.item-box {
+  flex-shrink: 0;
+  width: 160px;
+  height: 190px;
+  transition: all 0.5s;
+}
+
+.item {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3/4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: #1a1a20;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.item-cover {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-cover img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.item-info {
+  width: 100%;
+  text-align: center;
+}
+
+.item-name {
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.item-price {
+  color: #cbcbdd;
+  font-size: 8px;
+}
+
+.highlight .item {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.item-win-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.highlight .item-win-animation {
+  opacity: 0.2;
+}
+
+.layout-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-width: 100vw;
+  gap: 20px;
+  min-height: 100vh;
+  justify-content: center;
+  position: relative;
+}
+
+.arrow-top {
+  position: absolute;
+  height: 236px;
+  left: 50%;
+  bottom: 0;
+  z-index: 99;
+  width: 2px;
+  background: linear-gradient(
+    rgba(240, 121, 121, 0),
+    rgb(207, 203, 203),
+    rgba(240, 121, 121, 0)
+  );
+}
+
+.bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rise 10s infinite ease-in;
+}
+
+@keyframes rise {
+  0% {
+    bottom: -10px;
+    transform: translateY(0);
+  }
+  100% {
+    bottom: 100%;
+    transform: translateY(-10px);
+  }
+}
+
+
+
+
+button {
+  background: linear-gradient(180deg, #7848ff 0%, #6254ff 100%);
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.winner-display {
+  width: 100%;
+  max-width: 200px;
+  background: #1a1a20;
+  border-radius: 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.winner-display.show {
+  display: flex;
+}
+
+.winner-image {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.winner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.winner-info {
+  text-align: center;
+}
+
+.winner-name {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.winner-price {
+  color: #cbcbdd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.winner-description {
+  color: #93979c;
+  font-size: 12px;
+}
+
+.winner-popup {
+  position: absolute;
+  top: 20%;
+  /* left: 50%;
+  transform: translateX(-50%); */
+  background-color: #1a1a20;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.winner-popup.hidden {
+  display: none;
+}
+
+.winner-content img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.winner-content h2 {
+  color: #fff;
+  margin: 0 0 10px;
+}
+
+.winner-content p {
+  color: #cbcbdd;
+  margin: 5px 0;
+}
+
+.rarity-indicator {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+
+
+/* BUBBLY BUTTON */
+
+:root {
+  --fuschia: #ff0081;
+  --button-bg: var(--fuschia);
+  --button-text-color: #fff;
+}
+
+.bubbly-button {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  display: inline-block;
+  font-size: 1em;
+  padding: 1em;
+  width: 100px;
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--button-bg);
+  color: var(--button-text-color);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+}
+
+.bubbly-button:focus {
+  outline: 0;
+}
+
+.bubbly-button:before, .bubbly-button:after {
+  position: absolute;
+  content: '';
+  display: block;
+  width: 140%;
+  height: 100%;
+  left: -20%;
+  z-index: -1000;
+  transition: all ease-in-out 0.5s;
+  background-repeat: no-repeat;
+}
+
+.bubbly-button:before {
+  display: none;
+  top: -75%;
+  background-image:  
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle,  transparent 20%, var(--button-bg) 20%, transparent 30%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%), 
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle,  transparent 10%, var(--button-bg) 15%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+}
+
+.bubbly-button:after {
+  display: none;
+  bottom: -75%;
+  background-image:  
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%), 
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle,  transparent 10%, var(--button-bg) 15%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
+    radial-gradient(circle, var(--button-bg) 20%, transparent 20%);
+  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+}
+
+.bubbly-button:active {
+  transform: scale(0.9);
+  background-color: darken(var(--button-bg), 5%);
+  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+}
+
+.bubbly-button.animate:before {
+  display: block;
+  animation: topBubbles ease-in-out 0.75s forwards;
+}
+
+.bubbly-button.animate:after {
+  display: block;
+  animation: bottomBubbles ease-in-out 0.75s forwards;
+}
+
+@keyframes topBubbles {
+  0% {
+    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+  }
+  50% {
+    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+  }
+  100% {
+    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
+  }
+}
+
+@keyframes bottomBubbles {
+  0% {
+    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+  }
+  50% {
+    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+  }
+  100% {
+    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+    background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
+  }
+}
