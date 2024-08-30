@@ -1,17 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 body {
   margin: 0;
   background: #101a25;
-  font-family: "Poppins", sans-serif;
-  font-weight: 100;
+  font-family: "Kanit", sans-serif;
+  font-weight: 500;
+  background-image: url('../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
 }
 
 .main-wrapper {
   display: flex;
   justify-content: center;
   align-self: stretch;
-  height: 70vh; /* Increase the height to 70% of the viewport height */
+  height: 60vh; /* Increase the height to 70% of the viewport height */
   min-height: 400px; /* Set a minimum height to ensure it doesn't get too small on smaller screens */
 }
 
@@ -27,7 +35,7 @@ body {
 .box-container {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 200px;
   background: #11141f;
   display: flex;
   align-items: center;
@@ -48,7 +56,7 @@ body {
 .item-box {
   flex-shrink: 0;
   width: 160px;
-  height: 190px;
+  height: 170px;
   transition: all 0.5s;
 }
 
@@ -89,13 +97,14 @@ body {
 
 .item-name {
   color: #fff;
-  font-size: 10px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 2px;
 }
 
 .item-price {
   color: #cbcbdd;
+  display: none;
   font-size: 8px;
 }
 
@@ -125,13 +134,15 @@ body {
   min-width: 100vw;
   gap: 20px;
   min-height: 100vh;
-  justify-content: center;
+  justify-content: flex-start; /* Changed from center to align content from the top */
   position: relative;
+  backdrop-filter: blur(10px);
+  background-color: rgba(16, 26, 37, 0.7);
 }
 
 .arrow-top {
   position: absolute;
-  height: 236px;
+  height: 220px;
   left: 50%;
   bottom: 0;
   z-index: 99;
@@ -284,121 +295,201 @@ button {
   border-radius: 50%;
 }
 
-
-
-/* BUBBLY BUTTON */
-
-:root {
-  --fuschia: #ff0081;
-  --button-bg: var(--fuschia);
-  --button-text-color: #fff;
+/* Title */
+.title-section {
+  width: 100%;
+  top: 10vh;
+  max-width: 1200px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: left;
+  position: relative; /* Added for positioning */
+  z-index: 1; /* Ensure it's above other content */
 }
 
-.bubbly-button {
-  font-family: 'Helvetica', 'Arial', sans-serif;
-  display: inline-block;
-  font-size: 1em;
-  padding: 1em;
-  width: 100px;
-  height: 100px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: var(--button-bg);
-  color: var(--button-text-color);
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
+.title-section h1 {
+  font-size: 36px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.title-section p {
+  font-size: 18px;
+  color: #cbcbdd;
+  margin: 10px;
+}
+
+
+/* SPINNY BUTTON */
+
+.circle-button {
   position: relative;
-  transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
-  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  animation: pulse 2s infinite;
 }
 
-.bubbly-button:focus {
-  outline: 0;
+.circle-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-.bubbly-button:before, .bubbly-button:after {
+.circle-button:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+.circle-button .logo {
   position: absolute;
-  content: '';
-  display: block;
-  width: 140%;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease;
+}
+
+.circle-button:hover .logo {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.circle-button .logo img {
+  width: 100%;
   height: 100%;
-  left: -20%;
-  z-index: -1000;
-  transition: all ease-in-out 0.5s;
-  background-repeat: no-repeat;
+  object-fit: cover;
 }
 
-.bubbly-button:before {
-  display: none;
-  top: -75%;
-  background-image:  
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle,  transparent 20%, var(--button-bg) 20%, transparent 30%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%), 
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle,  transparent 10%, var(--button-bg) 15%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%);
-  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+.circular-text {
+  position: absolute;
+  width: 110%; /* Increased from 100% */
+  height: 110%; /* Increased from 100% */
 }
 
-.bubbly-button:after {
-  display: none;
-  bottom: -75%;
-  background-image:  
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%), 
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle,  transparent 10%, var(--button-bg) 15%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%),
-    radial-gradient(circle, var(--button-bg) 20%, transparent 20%);
-  background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+#rotatingText {
+  animation: rotate-circle 10s linear infinite;
 }
 
-.bubbly-button:active {
-  transform: scale(0.9);
-  background-color: darken(var(--button-bg), 5%);
-  box-shadow: 0 2px 25px rgba(255, 0, 130, 0.2);
+.text {
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  font-family: "Kanit", sans-serif;
+  font-size: 16px; /* Increased from 14px */
+  fill: #dedede;
 }
 
-.bubbly-button.animate:before {
-  display: block;
-  animation: topBubbles ease-in-out 0.75s forwards;
-}
-
-.bubbly-button.animate:after {
-  display: block;
-  animation: bottomBubbles ease-in-out 0.75s forwards;
-}
-
-@keyframes topBubbles {
-  0% {
-    background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
-  }
-  50% {
-    background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
-  }
-  100% {
-    background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
-    background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
+@keyframes rotate-circle {
+  to {
+    transform: rotate(1turn);
   }
 }
 
-@keyframes bottomBubbles {
-  0% {
-    background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+/* Media query for screens wider than 981px */
+
+
+@media (max-width: 981px) {
+  .title-section {
+    position: absolute;
+    top: 2.5vh; /* Position it 10% down the page */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Adjust width as needed */
+    max-width: 1200px;
   }
-  50% {
-    background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+
+  .main-wrapper {
+    height: 55vh; /* Increase the height to 80% of the viewport height */
   }
-  100% {
-    background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
-    background-size: 0% 0%, 0% 0%,  0% 0%,  0% 0%,  0% 0%,  0% 0%;
+  .hero {
+    padding-top: 0;
   }
+
+  .mobile-content {
+    display: flex;
+    padding-top: 60px;
+  }
+
+  .circle-button {
+    transform: translateY(-35px); /* Moves the button up by 10px */
+  }
+
+  .circle-button:hover {
+    transform: translateY(-35px) scale(1.05);
+  }
+
+  .circle-button:active {
+    transform: translateY(-35px) scale(0.95);
+  }
+
+  .circular-grid {
+    width: 150vw;
+    height: 150vw;
+  }
+
+  .circular-grid::before {
+    width: 120vw;
+    height: 120vw;
+  }
+
+  .circular-grid::after {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .letters-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 0 20px;
+  }
+
+  .letter {
+    font-size: 15vw;
+    flex-shrink: 0;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 588px) {
+  .main-wrapper {
+    height: 435px;
+  }
+
+}
+
+@media (max-width: 375px) {
+  .main-wrapper {
+    height: 435px;
+  }
+
+}
+
+@media (max-width: 330px) {
+  .main-wrapper {
+    height: 530px;
+  }
+
 }

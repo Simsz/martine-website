@@ -1,6 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import logoImage from "../assets/logo.png";
+import logoImage from "../assets/logo.svg";
 ---
 
 <nav class="top-nav">
@@ -10,7 +10,7 @@ import logoImage from "../assets/logo.png";
       <span class="nav-dot">.</span>
       <a href="/contact" class="nav-link" transition:animate="fade">event inquiry</a>
       <span class="nav-dot">.</span>
-      <a href="/menu" class="nav-link" transition:animate="fade">drinks</a>
+      <a href="/menu" class="nav-link" transition:animate="fade">menu</a>
     </div>
     <div class="middle-nav">
       <a href="/"><Image src={logoImage} alt="MARTINE Logo" class="logo" /></a>
@@ -27,13 +27,13 @@ import logoImage from "../assets/logo.png";
   <span class="icon-3"></span>
 </button>
 
-<div class="mobile-menu">
+<div class="mobile-menu" id="mobile-menu">
   <a href="/" class="mobile-nav-link">home</a>
   <a href="https://maps.app.goo.gl/eQ6s6r5JwarL4Nmc7" class="mobile-nav-link">directions</a>
-  <a href="/contact" class="mobile-nav-link" transition:animate="fade">event inquiry</a>
+  <a href="/contact" class="mobile-nav-link">event inquiry</a>
   <a href="https://www.instagram.com/martine_kocktails" class="mobile-nav-link">instagram</a>
-  <a href="/menu" class="mobile-nav-link" transition:animate="fade">drinks</a>
-  <a href="/roulette" class="mobile-nav-link" transition:animate="fade">roulette</a>
+  <a href="/menu" class="mobile-nav-link">menu</a>
+  <a href="/roulette" class="mobile-nav-link">drink roulette</a>
 </div>
 
 <style>
@@ -238,37 +238,53 @@ import logoImage from "../assets/logo.png";
 </style>
 
 <script>
+  let hamburgerIcon;
+  let mobileMenu;
+  let mobileNavLinks;
+
   function initializeMenu() {
-    const hamburgerIcon = document.getElementById("hamburger-icon");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const mobileNavLinks = document.querySelectorAll<HTMLElement>(".mobile-nav-link");
+    console.log("Initializing menu");
+    hamburgerIcon = document.getElementById("hamburger-icon");
+    mobileMenu = document.getElementById("mobile-menu");
+    mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
 
     if (hamburgerIcon && mobileMenu) {
-      hamburgerIcon.addEventListener("click", () => {
-        console.log("Hamburger clicked!");
-        hamburgerIcon.classList.toggle("active");
-        mobileMenu.classList.toggle("active");
+      hamburgerIcon.addEventListener("click", toggleMenu);
+    } else {
+      console.error("Hamburger icon or mobile menu not found");
+    }
+  }
 
-        if (mobileMenu.classList.contains("active")) {
-          mobileNavLinks.forEach((link, index) => {
-            setTimeout(() => {
-              link.style.opacity = "1";
-              link.style.transform = "translateY(0)";
-            }, index * 100);
-          });
-        } else {
-          mobileNavLinks.forEach((link) => {
-            link.style.opacity = "0";
-            link.style.transform = "translateY(20px)";
-          });
-        }
+  function toggleMenu() {
+    console.log("Hamburger clicked!");
+    hamburgerIcon.classList.toggle("active");
+    mobileMenu.classList.toggle("active");
+
+    if (mobileMenu.classList.contains("active")) {
+      mobileNavLinks.forEach((link, index) => {
+        setTimeout(() => {
+          link.style.opacity = "1";
+          link.style.transform = "translateY(0)";
+        }, index * 100);
+      });
+    } else {
+      mobileNavLinks.forEach((link) => {
+        link.style.opacity = "0";
+        link.style.transform = "translateY(20px)";
       });
     }
   }
 
-  // Run the initialization function when the DOM is loaded
-  document.addEventListener("DOMContentLoaded", initializeMenu);
+  function cleanupMenu() {
+    if (hamburgerIcon) {
+      hamburgerIcon.removeEventListener("click", toggleMenu);
+    }
+  }
 
-  // Re-run the initialization after Astro page transitions
-  document.addEventListener("astro:page-load", initializeMenu);
+  // Initialize menu
+  initializeMenu();
+
+  // Setup for View Transitions
+  document.addEventListener('astro:after-swap', initializeMenu);
+  document.addEventListener('astro:before-swap', cleanupMenu);
 </script>

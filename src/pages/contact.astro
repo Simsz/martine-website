@@ -3,6 +3,7 @@ import { ViewTransitions } from 'astro:transitions';
 import { Image } from "astro:assets";
 import backgroundImage from "../assets/inside.jpg";
 import Nav from "../components/Nav.astro";
+import mobileTopImage from "../assets/inside.jpg"; // Import your mobile top image
 ---
 
 <html lang="en">
@@ -17,7 +18,14 @@ import Nav from "../components/Nav.astro";
   </head>
   <body class="bg-secondary text-primary">
     <Nav />
-    <div class="relative min-h-screen flex flex-col items-center justify-start md:py-12 md:px-4 font-sans">
+    <div class="mobile-top-image">
+      <Image 
+        src={mobileTopImage} 
+        alt="Martine ambiance" 
+        class="w-full h-full object-cover"
+      />
+    </div>
+    <div class="relative min-h-screen flex flex-col items-center justify-start md:py-12 md:px-4">
       <div class="absolute inset-0 z-0 hidden md:block overflow-hidden">
         <Image 
           src={backgroundImage} 
@@ -26,7 +34,7 @@ import Nav from "../components/Nav.astro";
         />
       </div>
 
-      <div class="relative z-10 w-full md:max-w-4xl lg:max-w-5xl mt-24"> <!-- Added margin-top -->
+      <div class="relative z-10 w-full md:max-w-4xl lg:max-w-5xl mainDiv"> <!-- Added margin-top -->
         <div class="bg-secondary-light/80 md:backdrop-blur-md md:rounded-xl md:shadow-2xl overflow-hidden">
           <div class="px-6 py-12 sm:px-12">
             <div class="mb-8">
@@ -78,7 +86,7 @@ import Nav from "../components/Nav.astro";
                 </div>
               </div>
               <div class="flex items-center justify-end mt-6">
-                <button type="submit" class="w-full md:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-secondary bg-accent hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-colors duration-300">
+                <button type="submit" class="submit-button">
                   Send Message
                 </button>
               </div>
@@ -91,6 +99,7 @@ import Nav from "../components/Nav.astro";
 </html>
 
 <style>
+  @import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap");
   :root {
     --color-accent: #849F69;
     --color-accent-light: #9EB889;
@@ -107,7 +116,9 @@ import Nav from "../components/Nav.astro";
     background-color: var(--color-secondary);
     color: var(--color-primary);
   }
-
+  .mainDiv{
+    margin-top: 6rem;
+  }
   .bg-secondary {
     background-color: var(--color-secondary);
   }
@@ -122,6 +133,10 @@ import Nav from "../components/Nav.astro";
 
   .text-primary-light {
     color: var(--color-gray);
+    
+    font-family: "Hind", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 
   .text-accent {
@@ -239,4 +254,104 @@ import Nav from "../components/Nav.astro";
     -webkit-box-shadow: 0 0 0 30px var(--color-secondary-light) inset !important;
     -webkit-text-fill-color: var(--color-primary) !important;
   }
+
+  /* submit button cool styles */
+
+  .submit-button {
+    width: 100%;
+    max-width: 200px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-accent);
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--color-accent);
+    transition: all 0.3s ease;
+    z-index: -1;
+  }
+
+  .submit-button:hover {
+    color: var(--color-secondary);
+    border-color: var(--color-accent);
+  }
+
+  .submit-button:hover::before {
+    width: 100%;
+  }
+
+  .submit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(132, 159, 105, 0.5);
+  }
+
+  /* Add this keyframe animation */
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(132, 159, 105, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(132, 159, 105, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(132, 159, 105, 0);
+    }
+  }
+
+  .submit-button:hover {
+    animation: pulse 1.5s infinite;
+  }
+
+
+  /* mobile image */
+
+  .mobile-top-image {
+    display: none; /* Hidden by default */
+    width: 100%;
+    height: 200px; /* Adjust this value as needed */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mobile-top-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  @media (max-width: 768px) {
+    .mainDiv {
+      margin-top: 0; /* Remove margin-top on mobile */
+    }
+
+    .mobile-top-image {
+      display: block; /* Show on mobile */
+    }
+
+    body {
+      padding-top: 0; /* Remove top padding on mobile */
+    }
+  }
+
 </style>

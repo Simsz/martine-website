@@ -1,9 +1,8 @@
 ---
 import { Image } from "astro:assets";
-import logoImage from "../assets/logo.png";
+import logoImage from "../assets/logo.svg";
 import backgroundImage from "../assets/background.jpg";
 import overlayVideo from "../assets/fg4.mp4";
-import Nav from "./Nav.astro";
 ---
 
 <div id="overlay">
@@ -13,10 +12,9 @@ import Nav from "./Nav.astro";
   </video>
 </div>
 <section class="hero" transition:persist>
-  <Nav />
 
   <div class="mobile-content">
-    <a href="/menu" class="circle-button" transition:animate="fade">
+    <a href="/roulette" class="circle-button" transition:animate="fade">
       <div class="logo">
         <Image src={logoImage} alt="MARTINE Logo" />
       </div>
@@ -301,39 +299,3 @@ import Nav from "./Nav.astro";
     }
   }
 </style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", initializeMenu);
-  document.addEventListener("astro:after-swap", initializeMenu);
-
-  function initializeMenu() {
-    const hamburgerIcon = document.querySelector<HTMLElement>("#hamburger-icon");
-    const mobileMenu = document.querySelector<HTMLElement>(".mobile-menu");
-    const mobileNavLinks = document.querySelectorAll<HTMLElement>(".mobile-nav-link");
-
-    hamburgerIcon?.addEventListener("click", () => {
-      hamburgerIcon.classList.toggle("active");
-      mobileMenu?.classList.toggle("active");
-
-      if (mobileMenu?.classList.contains("active")) {
-        mobileMenu.style.display = "flex";
-        setTimeout(() => {
-          mobileNavLinks.forEach((link, index) => {
-            setTimeout(() => {
-              link.style.opacity = "1";
-              link.style.transform = "translateY(0)";
-            }, index * 100);
-          });
-        }, 100);
-      } else {
-        mobileNavLinks.forEach((link) => {
-          link.style.opacity = "0";
-          link.style.transform = "translateY(20px)";
-        });
-        setTimeout(() => {
-          if (mobileMenu) mobileMenu.style.display = "none";
-        }, 300);
-      }
-    });
-  }
-</script>
